@@ -1,0 +1,146 @@
+md = 2;
+if md == 0
+    load('feedbackresults.mat', 'X')
+    yawvalues = X(:, 1:2);
+    pitchvalues = X(:, 3:4);
+    rollvalues = X(:, 5:6);
+    disp("e")
+elseif md == 1
+    sim('vandertest2')
+end
+
+yYaw = yawvalues(:, 1);
+xYaw = yawvalues(:, 2);
+yPitch = pitchvalues(:, 1);
+xPitch = pitchvalues(:, 2);
+yRoll = rollvalues(:, 1);
+xRoll = rollvalues(:, 2);
+
+figure(1)
+subplot(1, 3, 1)
+plot(xYaw, yYaw)
+title('Yaw')
+xlabel('Angle')
+ylabel('Velocity')
+subplot(1, 3, 2)
+plot(xPitch, yPitch)
+title('Pitch')
+xlabel('Angle')
+ylabel('Velocity')
+subplot(1, 3, 3)
+plot(xRoll, yRoll)
+title('Roll')
+xlabel('Angle')
+ylabel('Velocity')
+%figtext1 = 'images/angle-speed_' + 'vander'
+saveas(fig1, append('images/angle-speed_', 'vander'))
+
+figure(2)
+plot3(xYaw, xPitch, xRoll)
+xlabel('Yaw')
+ylabel('Pitch')
+zlabel('Roll')
+
+figure(3)
+plot(xYaw, xPitch)
+xlabel('Yaw')
+ylabel('Pitch')
+
+figure(4)
+plot(xPitch, xRoll)
+title('Angles')
+xlabel('Pitch')
+ylabel('Roll')
+
+figure(5)
+plot(xRoll, xYaw)
+title('Angles')
+xlabel('Roll')
+ylabel('Yaw')
+
+figure(6)
+plot(yPitch, yRoll)
+title('Velocities')
+xlabel('Pitch')
+ylabel('Roll')
+
+
+vLength = length(xYaw1);
+vStart = 1000;
+
+fig1 = figure(1)
+tiledlayout(2,2, 'Padding', 'none', 'TileSpacing', 'compact');
+
+nexttile
+plot(xYaw1, yYaw1, xYaw2, yYaw2, xYaw3, yYaw3, 'LineStyle', ':')
+title('Yaw')
+xlabel('Angle')
+ylabel('Velocity')
+Lgnd = legend('x0', 'x1', 'x2')
+Lgnd.Position(1) = 0.7;
+Lgnd.Position(2) = 0.2;
+yRange1 = max(yYaw1(vStart:vLength)) - min(yYaw1(vStart:vLength));
+ylim([min(yYaw1(vStart:vLength)) - yRange1*0.1, max(yYaw1(vStart:vLength)) + yRange1*0.1])
+
+nexttile
+plot(xPitch1, yPitch1, 'LineStyle', ':')
+title('Pitch')
+xlabel('Angle')
+ylabel('Velocity')
+pRange1 = max(yPitch1(vStart:vLength)) - min(yPitch1(vStart:vLength));
+ylim([min(yPitch1(vStart:vLength)) - pRange1*0.1, max(yPitch1(vStart:vLength)) + pRange1*0.1])
+
+nexttile
+plot(xRoll1, yRoll1, 'LineStyle', ':')
+title('Roll')
+xlabel('Angle')
+ylabel('Velocity')
+rRange1 = max(yRoll1(vStart:vLength)) - min(yRoll1(vStart:vLength));
+ylim([min(yRoll1(vStart:vLength)) - rRange1*0.1, max(yRoll1(vStart:vLength)) + rRange1*0.1])
+fontsize(fig1, fontSize, "points")
+saveas(fig1, append('images/', plotName, '_angle-speed_', simuName, '.png'))
+
+fig2 = figure(2)
+plot3(xYaw1, xPitch1, 'LineStyle', ':')
+title('Angles 3D')
+xlabel('Yaw')
+ylabel('Pitch')
+zlabel('Roll')
+fontsize(fig2, fontSize, "points")
+saveas(fig2, append('images/', plotName, '_3d_angles_', simuName, '.png'))
+
+fig3 = figure(3)
+plot(xPitch1, xRoll1, 'LineStyle', ':')
+title('Angles')
+xlabel('Pitch')
+ylabel('Roll')
+fontsize(fig3, fontSize, "points")
+saveas(fig3, append('images/', plotName, '_pitch-roll_', simuName, '.png'))
+
+fig4 = figure(4)
+plot(xYaw1, xPitch1, 'LineStyle', ':')
+xlabel('Yaw')
+ylabel('Pitch')
+legend('x0', 'x1', 'x2')
+fontsize(fig4, fontSize, "points")
+saveas(fig4, append('images/', plotName, '_yaw-pitch_', simuName, '.png'))
+
+fig5 = figure(5)
+plot(xYaw1, xRoll1, 'LineStyle', ':')
+title('Angles')
+xlabel('Yaw')
+ylabel('Roll')
+fontsize(fig5, fontSize, "points")
+saveas(fig5, append('images/', plotName, '_yaw-roll_', simuName, '.png'))
+
+fig6 = figure(6)
+plot(yPitch1, yRoll1, 'LineStyle', ':')
+title('Velocities')
+xlabel('Pitch')
+ylabel('Roll')
+
+xlim([min(yPitch1(vStart:vLength)) - pRange1*0.1, max(yPitch1(vStart:vLength)) + pRange1*0.1])
+ylim([min(yRoll1(vStart:vLength)) - rRange1*0.1, max(yRoll1(vStart:vLength)) + rRange1*0.1])
+
+fontsize(fig6, fontSize, "points")
+saveas(fig6, append('images/', plotName, '_velocity_roll-yaw_', simuName, '.png'))

@@ -1,0 +1,25 @@
+function [u1_num, u2_num] = solveSyms2(x_5, x_6, u_10, u_20)  % add necessary inputs and outputs
+  syms x5 x6 u10 u20 u1
+  %tic
+  u_1 = evalin('base', 'sol1');
+  u_2 = evalin('base', 'sol2');
+  % u_2 = evalin('base', 'solx11');
+  % u_1 = evalin('base', 'solx21');
+  u_1 = evalin('base', 'sol11');
+  u_2 = evalin('base', 'sol21');
+  % disp(x_5)
+  % disp(x_6)
+  % disp(u_10)
+  % disp(u_20)
+  %toc
+  %tic
+  for n = 1:length(sol11)
+  u1_num = real(double(subs(u_1, {x5, x6, u10, u20}, {x_5, x_6, u_10, u_20})));
+  u2_num = real(double(subs(u_2, {x5, x6, u10, u20}, {x_5, x_6, u_10, u_20})));
+
+  % u1_num = real(double(subs(u_1, {x5, x6, u10, u20}, {x_5, x_6, u_10, u_20})));
+  % u2_num = real(double(subs(u_2, {x6, u1, u10}, {x_6, u1_num, u_10})));
+
+  % disp(u1_num)
+  % disp(u2_num)
+end
